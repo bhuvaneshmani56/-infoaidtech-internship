@@ -1,0 +1,115 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Student {
+    private int id;
+    private String name;
+    private int age;
+    
+    public Student(int id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+    }
+    
+    public int getId() {
+        return id;
+    }
+    
+    public String getName() {
+        return name;
+    }
+    
+    public int getAge() {
+        return age;
+    }
+}
+
+class StudentRecordManagementSystem {
+    private List<Student> studentList;
+    
+    public StudentRecordManagementSystem() {
+        studentList = new ArrayList<>();
+    }
+    
+    public void addStudent(Student student) {
+        studentList.add(student);
+    }
+    
+    public void removeStudent(int studentId) {
+        for (Student student : studentList) {
+            if (student.getId() == studentId) {
+                studentList.remove(student);
+                break;
+            }
+        }
+    }
+    
+    public void displayAllStudents() {
+        for (Student student : studentList) {
+            System.out.println("ID: " + student.getId());
+            System.out.println("Name: " + student.getName());
+            System.out.println("Age: " + student.getAge());
+            System.out.println("------------------------");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        StudentRecordManagementSystem recordManagementSystem = new StudentRecordManagementSystem();
+        
+        boolean isRunning = true;
+        while (isRunning) {
+            System.out.println("1. Add Student");
+            System.out.println("2. Remove Student");
+            System.out.println("3. Display All Students");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            
+            int choice = scanner.nextInt();
+            
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter student ID: ");
+                    int id = scanner.nextInt();
+                    System.out.print("Enter student name: ");
+                    String name = scanner.next();
+                    System.out.print("Enter student age: ");
+                    int age = scanner.nextInt();
+                    
+                    Student student = new Student(id, name, age);
+                    recordManagementSystem.addStudent(student);
+                    System.out.println("Student added successfully.");
+                    System.out.println("------------------------");
+                    break;
+                    
+                case 2:
+                    System.out.print("Enter student ID to remove: ");
+                    int removeId = scanner.nextInt();
+                    recordManagementSystem.removeStudent(removeId);
+                    System.out.println("Student removed successfully.");
+                    System.out.println("------------------------");
+                    break;
+                    
+                case 3:
+                    recordManagementSystem.displayAllStudents();
+                    break;
+                    
+                case 4:
+                    isRunning = false;
+                    System.out.println("Exiting the program...");
+                    break;
+                    
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    System.out.println("------------------------");
+                    break;
+            }
+        }
+        
+        scanner.close();
+    }
+}
